@@ -11,7 +11,7 @@ export default function App() {
       setResult(res);
       setError('');
     } catch (err) {
-      setError(err.message || '上传失败');
+      setError(err.message || 'Upload failed');
       setResult(null);
     }
   };

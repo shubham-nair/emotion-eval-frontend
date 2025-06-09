@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SummaryTable = ({ data }) => {
-  if (!data || !data.length) return <div>无汇总数据</div>;
+  if (!data || !data.length) return <div>No summary data</div>;
   return (
     <table border="1" cellPadding={6} style={{ width: '100%', marginBottom: 32 }}>
       <thead>

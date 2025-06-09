@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DetailTable = ({ data }) => {
-  if (!data || !data.length) return <div>无明细数据</div>;
+  if (!data || !data.length) return <div>No detailed data</div>;
   return (
     <table border="1" cellPadding={6} style={{ width: '100%', marginBottom: 32 }}>
       <thead>

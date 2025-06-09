@@ -2,41 +2,41 @@ import React, { useState } from 'react';
 import { Upload, Button, Table, Typography, Alert, Space, message, Card, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { uploadFile } from './services/api';
-// 如果没装，可以注释掉下面这两行和 <BarChart> 部分
+// If not installed, you can comment out the next two lines and the <BarChart> section
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
 
 const { Title } = Typography;
 
 const summaryColumns = [
-  { title: '模型', dataIndex: 'model_version', key: 'model_version', align: 'center' },
-  { title: '平均F1', dataIndex: 'f1_avg', key: 'f1_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
-  { title: '平均Precision', dataIndex: 'precision_avg', key: 'precision_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
-  { title: '平均Recall', dataIndex: 'recall_avg', key: 'recall_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
-  { title: '平均情绪提升', dataIndex: 'emotion_slope', key: 'emotion_slope', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
-  { title: '累计增益', dataIndex: 'cumulative_gain', key: 'cumulative_gain', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
-  { title: '会话数', dataIndex: 'count', key: 'count', align: 'center' },
+  { title: 'Model', dataIndex: 'model_version', key: 'model_version', align: 'center' },
+  { title: 'Avg F1', dataIndex: 'f1_avg', key: 'f1_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
+  { title: 'Avg Precision', dataIndex: 'precision_avg', key: 'precision_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
+  { title: 'Avg Recall', dataIndex: 'recall_avg', key: 'recall_avg', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
+  { title: 'Avg Emotion Lift', dataIndex: 'emotion_slope', key: 'emotion_slope', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
+  { title: 'Cumulative Gain', dataIndex: 'cumulative_gain', key: 'cumulative_gain', align: 'center', render: val => val != null ? val.toFixed(4) : '--' },
+  { title: 'Sessions', dataIndex: 'count', key: 'count', align: 'center' },
 ];
 
 const detailColumns = [
   { title: 'Session ID', dataIndex: 'session_id', key: 'session_id', align: 'center' },
-  { title: '模型', dataIndex: 'model_version', key: 'model_version', align: 'center' },
+  { title: 'Model', dataIndex: 'model_version', key: 'model_version', align: 'center' },
   { title: 'F1', dataIndex: 'f1_avg', key: 'f1_avg', align: 'center', render: val => val?.toFixed(4) },
   { title: 'Precision', dataIndex: 'precision_avg', key: 'precision_avg', align: 'center', render: val => val?.toFixed(4) },
   { title: 'Recall', dataIndex: 'recall_avg', key: 'recall_avg', align: 'center', render: val => val?.toFixed(4) },
-  { title: '开始情绪', dataIndex: 'start_sentiment', key: 'start_sentiment', align: 'center', render: val => val?.toFixed(3) },
-  { title: '结束情绪', dataIndex: 'end_sentiment', key: 'end_sentiment', align: 'center', render: val => val?.toFixed(3) },
-  { title: '情绪提升', dataIndex: 'emotion_slope', key: 'emotion_slope', align: 'center', render: val => val?.toFixed(3) },
-  { title: '累计增益', dataIndex: 'cumulative_gain', key: 'cumulative_gain', align: 'center', render: val => val?.toFixed(3) },
-  { title: '平均Bot情绪', dataIndex: 'avg_bot_sentiment', key: 'avg_bot_sentiment', align: 'center', render: val => val?.toFixed(3) },
-  { title: '轮次', dataIndex: 'turns', key: 'turns', align: 'center' },
+  { title: 'Start Sentiment', dataIndex: 'start_sentiment', key: 'start_sentiment', align: 'center', render: val => val?.toFixed(3) },
+  { title: 'End Sentiment', dataIndex: 'end_sentiment', key: 'end_sentiment', align: 'center', render: val => val?.toFixed(3) },
+  { title: 'Emotion Lift', dataIndex: 'emotion_slope', key: 'emotion_slope', align: 'center', render: val => val?.toFixed(3) },
+  { title: 'Cumulative Gain', dataIndex: 'cumulative_gain', key: 'cumulative_gain', align: 'center', render: val => val?.toFixed(3) },
+  { title: 'Avg Bot Sentiment', dataIndex: 'avg_bot_sentiment', key: 'avg_bot_sentiment', align: 'center', render: val => val?.toFixed(3) },
+  { title: 'Turns', dataIndex: 'turns', key: 'turns', align: 'center' },
 ];
 
-// 图表字段
+// Chart metrics
 const chartMetrics = [
-  { key: 'f1_avg', name: '平均F1', color: '#4a90e2' },
+  { key: 'f1_avg', name: 'Avg F1', color: '#4a90e2' },
   { key: 'precision_avg', name: 'Precision', color: '#8bc34a' },
   { key: 'recall_avg', name: 'Recall', color: '#ffc107' },
-  { key: 'emotion_slope', name: '情绪提升', color: '#ff6f91' },
+  { key: 'emotion_slope', name: 'Emotion Lift', color: '#ff6f91' },
 ];
 
 export default function App() {
@@ -54,9 +54,9 @@ export default function App() {
       const res = await uploadFile(file);
       setResult(res);
       onSuccess('ok');
-      message.success('上传分析成功！');
+      message.success('Upload and analysis successful!');
     } catch (err) {
-      setError(err.message || '上传失败');
+      setError(err.message || 'Upload failed');
       onError?.(err);
     } finally {
       setLoading(false);
@@ -121,7 +121,7 @@ export default function App() {
                 borderColor: '#3366ff',
               }}
             >
-              上传文件
+              Click to Upload JSON File
             </Button>
           </Upload>
         </div>
@@ -144,7 +144,7 @@ export default function App() {
             {result.summary && (
               <>
                 <Divider orientation="left" orientationMargin="0" style={{ fontWeight: 700, fontSize: 20 }}>
-                  汇总统计
+                  Summary Statistics
                 </Divider>
                 <Table
                   columns={summaryColumns}
@@ -191,7 +191,7 @@ export default function App() {
 
             {/* 明细面板，默认只展示前6条，可点展开查看更多 */}
             <Divider orientation="left" orientationMargin="0" style={{ fontWeight: 700, fontSize: 20 }}>
-              明细结果
+              Detailed Results
             </Divider>
             <div style={{ background: '#f8fafd', borderRadius: 16, minHeight: 90 }}>
               <Table
@@ -217,7 +217,7 @@ export default function App() {
                     style={{ fontSize: 17, color: '#4a90e2', letterSpacing: 1 }}
                     onClick={() => setShowAll(!showAll)}
                   >
-                    {showAll ? '收起明细' : `展开全部（${detailData.length}条）`}
+                    {showAll ? 'Collapse Details' : `Expand All (${detailData.length} items)`}
                   </Button>
                 </div>
               )}
@@ -226,7 +226,7 @@ export default function App() {
         )}
       </Card>
       <div style={{ textAlign: 'center', marginTop: 34, color: '#adb2be', fontSize: 15 }}>
-        © {new Date().getFullYear()} Model Judge | Powered by Ant Design & Recharts
+        &copy; {new Date().getFullYear()} Model Judge | Powered by Ant Design & Recharts
         <span style={{ marginLeft: 16 }}>
           <a href="https://github.com/Islene888/EmotionEval_Chat-model-evaluate" target="_blank" rel="noopener noreferrer" style={{ color: '#5672e3' }}>
             GitHub
