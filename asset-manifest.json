@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/emotion-eval-frontend/static/css/main.dd1ea7b7.css",
+    "main.js": "/emotion-eval-frontend/static/js/main.4cc3fb96.js",
+    "index.html": "/emotion-eval-frontend/index.html",
+    "main.dd1ea7b7.css.map": "/emotion-eval-frontend/static/css/main.dd1ea7b7.css.map",
+    "main.4cc3fb96.js.map": "/emotion-eval-frontend/static/js/main.4cc3fb96.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dd1ea7b7.css",
+    "static/js/main.4cc3fb96.js"
+  ]
+}
