@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://3.83.232.183:8000';
+const API_BASE_URL = 'https://chatbotevaluator.duckdns.org'; // New URL
 
 export async function uploadFile(file) {
   const formData = new FormData();
